@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#153c50">
+<title>Jelajah Aljabar — MPI Kelas VII</title>
+<style>
+:root{--navy:#153c50;--green:#16765a;--mint:#d7eee5;--blue:#dceafe;--orange:#fce8d2;--purple:#eee2fa;--ink:#17313d;--muted:#607580;--paper:#f5f8fa;--white:#fff;--line:#dce5e9;--red:#b93838}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 Arial,Helvetica,sans-serif}
+button,input,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:11px 16px;background:var(--green);color:white;font-weight:700;transition:.15s}button:hover{filter:brightness(.94)}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #f2b45c;outline-offset:2px}button.secondary{background:#e8eff2;color:var(--navy)}button.light{background:white;color:var(--navy);border:1px solid var(--line)}button.danger{background:var(--red)}button:disabled{opacity:.45;cursor:not-allowed}
+header{background:var(--navy);color:white;padding:13px max(16px,calc((100vw - 1100px)/2));display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:45px;height:45px;display:grid;place-items:center;border-radius:14px;background:#fff;color:var(--green);font-size:24px;font-weight:900}.brand h1{font-size:18px;margin:0}.brand small{display:block;color:#d8e6eb;font-size:12px}
+.top-actions{display:flex;gap:8px;align-items:center}.top-actions button{padding:8px 12px}
+main{max-width:1100px;margin:auto;padding:24px 16px 48px}.screen{display:none;animation:fade .2s ease}.screen.active{display:block}@keyframes fade{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--green)}h2{font-size:clamp(25px,4vw,38px);line-height:1.15;margin:8px 0 12px;color:var(--navy)}h3{margin:0 0 8px;color:var(--navy)}p{margin:8px 0 14px}.muted{color:var(--muted)}.hero{background:linear-gradient(125deg,#e0f3eb,#e7efff);border-radius:24px;padding:clamp(22px,5vw,52px);display:grid;grid-template-columns:1.5fr 1fr;gap:25px;align-items:center;overflow:hidden}.hero-art{font-size:clamp(54px,9vw,100px);text-align:center;line-height:1.2}.hero-art span{display:inline-block;background:white;border-radius:22px;padding:10px 18px;box-shadow:0 10px 25px #153c5014;margin:4px}.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.tile,.panel{background:white;border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 5px 16px #153c5008}.tile{cursor:pointer;text-align:left;color:var(--ink);display:block;width:100%;min-height:150px}.tile:hover{border-color:#91c9b2;transform:translateY(-2px)}.tile .emoji{font-size:30px;display:block;margin-bottom:8px}.tile h3{font-size:19px}.tile p{color:var(--muted);margin-bottom:0}.section-head{display:flex;justify-content:space-between;align-items:end;gap:15px;flex-wrap:wrap;margin-bottom:18px}.section-head p{margin-bottom:0}
+.breadcrumb{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:18px}.breadcrumb button{padding:6px 10px;font-size:13px}
+.callout{background:var(--mint);border-radius:14px;padding:15px 17px;margin:15px 0}.formula{font-size:clamp(24px,4vw,34px);font-weight:800;color:var(--green);text-align:center;padding:16px;background:#f2faf6;border-radius:14px;margin:12px 0}.tag{display:inline-block;padding:5px 9px;border-radius:99px;font-size:12px;font-weight:800;background:var(--blue);color:var(--navy);margin:2px}
+.part-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.part{padding:12px 17px;border-radius:12px;background:#edf3f5;border:2px solid transparent;font-weight:800;font-size:24px;cursor:pointer}.part.selected{border-color:var(--green);background:var(--mint)}.feedback{padding:12px 14px;border-radius:12px;margin-top:12px;font-weight:700}.feedback.good{background:#e0f5e8;color:#155b3f}.feedback.bad{background:#fde8e7;color:#9a2828}
+.progress{height:9px;background:#e5ecef;border-radius:99px;overflow:hidden;margin:12px 0}.progress span{display:block;height:100%;width:0;background:var(--green);transition:width .2s}
+.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}.option{background:white;color:var(--ink);border:2px solid var(--line);text-align:left}.option.chosen{border-color:var(--green);background:#edf8f2}.option.correct{border-color:var(--green);background:#e0f5e8}.option.wrong{border-color:#d85d5d;background:#fff0ef}
+.question-number{color:var(--muted);font-weight:800;font-size:13px}.question{font-size:22px;font-weight:800;color:var(--navy);margin:10px 0}
+.sim-card{display:grid;grid-template-columns:1fr 1fr;gap:16px}.scenario{background:#fff5e8;border-radius:16px;padding:20px}.answer-drop{border:2px dashed #8eb6a6;border-radius:16px;padding:18px;min-height:120px;background:#f7fcf9}
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.chip{background:#fff;color:var(--navy);border:2px solid #b9d2ca}.chip.active{background:var(--mint);border-color:var(--green)}
+input[type=text],textarea{width:100%;border:1px solid #bacbd2;border-radius:10px;padding:12px;background:white;color:var(--ink)}label{font-weight:700;display:block;margin:10px 0 6px}.footer-nav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:22px}.score-big{font-size:56px;font-weight:900;color:var(--green);line-height:1}.pill{border-radius:99px;padding:6px 10px;background:#eef2f4;font-size:12px;font-weight:700}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:20px 12px 30px}
+@media(max-width:720px){.hero{grid-template-columns:1fr}.hero-art{order:-1}.grid.three{grid-template-columns:1fr}.sim-card{grid-template-columns:1fr}.top-actions{width:100%}.options{grid-template-columns:1fr}.section-head{align-items:start}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">x²</div><div><h1>Jelajah Aljabar</h1><small>Multimedia Pembelajaran Interaktif • Matematika Kelas VII</small></div></div>
+ <div class="top-actions"><button class="secondary" onclick="go('home')">⌂ Beranda</button><button class="secondary" onclick="toggleSound()" id="soundBtn" aria-pressed="false">🔊 Suara: Mati</button></div>
+</header>
+<main>
+<section id="home" class="screen active">
+ <div class="hero">
+  <div><div class="eyebrow">Kurikulum Merdeka • Fase D</div><h2>Belajar aljabar dari hal-hal di sekitar kita!</h2><p>Kenali variabel, koefisien, konstanta, dan bentuk aljabar melalui materi singkat, simulasi kehidupan sehari-hari, serta kuis interaktif.</p><p class="muted"><b>SMPN 12 Kolaka Utara</b> · Matematika Kelas VII</p>
+  <div class="hero-actions"><button onclick="go('menu')">Mulai Belajar →</button><button class="light" onclick="go('profile')">Profil MPI</button></div></div>
+  <div class="hero-art" aria-label="Ilustrasi simbol matematika"><span>x + y</span><br><span>3x − 2</span></div>
+ </div>
+ <div class="grid three" style="margin-top:16px">
+  <div class="panel"><span class="emoji">📘</span><h3>Materi ringkas</h3><p class="muted">Belajar konsep dasar dengan contoh.</p></div>
+  <div class="panel"><span class="emoji">🧩</span><h3>Simulasi</h3><p class="muted">Hubungkan situasi nyata dengan bentuk aljabar.</p></div>
+  <div class="panel"><span class="emoji">🏆</span><h3>Kuis 10 soal</h3><p class="muted">Dapatkan skor dan umpan balik langsung.</p></div>
+ </div>
+</section>
+
+<section id="menu" class="screen">
+ <div class="section-head"><div><div class="eyebrow">Menu utama</div><h2>Pilih kegiatan belajar</h2><p class="muted">Silakan mulai dari materi, lalu lanjutkan ke simulasi dan kuis.</p></div><span class="pill" id="progressPill">Progres: 0/3</span></div>
+ <div class="grid">
+  <button class="tile" onclick="go('material')"><span class="emoji">📘</span><h3>1. Materi Aljabar</h3><p>Pengertian, unsur-unsur, dan suku sejenis.</p></button>
+  <button class="tile" onclick="startSimulation()"><span class="emoji">🧩</span><h3>2. Simulasi</h3><p>Modelkan situasi belanja dan benda sehari-hari.</p></button>
+  <button class="tile" onclick="startQuiz()"><span class="emoji">🏆</span><h3>3. Kuis Interaktif</h3><p>10 soal pilihan ganda dengan penilaian otomatis.</p></button>
+  <button class="tile" onclick="go('profile')"><span class="emoji">👩‍🏫</span><h3>4. Profil dan refleksi</h3><p>Identitas aplikasi dan catatan belajar.</p></button>
+ </div>
+ <div class="footer-nav"><button class="secondary" onclick="go('home')">← Kembali</button></div>
+</section>
+
+<section id="material" class="screen">
+ <div class="breadcrumb"><button class="secondary" onclick="go('menu')">Menu</button><span>›</span><span>Materi Aljabar</span></div>
+ <div class="section-head"><div><div class="eyebrow">Kegiatan 1</div><h2>Mengenal bentuk aljabar</h2><p class="muted">Baca contoh, lalu klik unsur aljabar untuk mengenal fungsinya.</p></div><span class="pill">Materi ringkas</span></div>
+ <div class="panel">
+  <h3>Apa itu aljabar?</h3><p>Aljabar adalah cara menyatakan hubungan atau bilangan menggunakan huruf (variabel), angka, dan operasi hitung. Huruf digunakan untuk mewakili nilai yang belum diketahui atau dapat berubah.</p>
+  <div class="formula">4x + 7</div>
+  <div class="part-row"><button class="part" onclick="showPart('4x + 7','Bentuk aljabar: gabungan variabel, koefisien, konstanta, dan operasi.')">4x + 7</button><button class="part" onclick="showPart('x','Variabel: huruf yang mewakili nilai, yaitu x.')">x</button><button class="part" onclick="showPart('4','Koefisien: angka yang mengalikan variabel x, yaitu 4.')">4</button><button class="part" onclick="showPart('7','Konstanta: bilangan tanpa variabel, yaitu 7.')">7</button></div>
+  <div id="partFeedback" class="callout" aria-live="polite">Klik salah satu bagian di atas untuk melihat penjelasan.</div>
+ </div>
+ <div class="grid" style="margin-top:15px">
+  <div class="panel"><h3>Istilah penting</h3><p><span class="tag">Variabel</span> huruf, misalnya x atau a.</p><p><span class="tag">Koefisien</span> angka pengali variabel, misalnya 5 pada 5a.</p><p><span class="tag">Konstanta</span> bilangan tanpa variabel, misalnya −3.</p><p><span class="tag">Suku</span> bagian yang dipisahkan oleh tanda + atau −.</p></div>
+  <div class="panel"><h3>Suku sejenis</h3><p>Suku sejenis memiliki variabel dan pangkat variabel yang sama.</p><div class="formula">3x + 4x = 7x</div><p class="muted">Contoh: 2a dan 5a sejenis; 2a dan 2b tidak sejenis.</p><button onclick="showMaterialCheck()">Coba cek pemahaman</button><div id="materialCheck" aria-live="polite"></div></div>
+ </div>
+ <div class="footer-nav"><button class="secondary" onclick="go('menu')">← Menu</button><button onclick="markDone('material');go('simulation')">Selesai, lanjut simulasi →</button></div>
+</section>
+
+<section id="simulation" class="screen">
+ <div class="breadcrumb"><button class="secondary" onclick="go('menu')">Menu</button><span>›</span><span>Simulasi</span></div>
+ <div class="section-head"><div><div class="eyebrow">Kegiatan 2</div><h2>Aljabar di kehidupan sehari-hari</h2><p class="muted">Baca cerita, pilih model aljabar yang sesuai, lalu periksa jawabanmu.</p></div><span class="pill" id="simCount">Situasi 1 dari 5</span></div>
+ <div class="sim-card">
+  <div class="scenario"><div style="font-size:38px">🛍️</div><h3 id="simTitle">Membeli buku tulis</h3><p id="simStory">Harga satu buku tulis adalah x rupiah. Berapa harga 3 buku tulis?</p><p class="muted" id="simHint">Petunjuk: harga yang sama dijumlahkan tiga kali.</p></div>
+  <div class="panel"><h3>Pilih bentuk aljabar</h3><div class="chip-row" id="simOptions"></div><div id="simFeedback" aria-live="polite" class="muted">Pilih salah satu jawaban.</div><div class="footer-nav"><button class="secondary" onclick="prevSim()">← Sebelumnya</button><button onclick="nextSim()" id="nextSimBtn" disabled>Berikutnya →</button></div></div>
+ </div>
+ <div class="panel" style="margin-top:16px"><h3>Tantangan berpikir kritis</h3><p>Siti membeli 3 buku dengan harga <b>b</b> rupiah per buku dan 2 pensil dengan harga <b>p</b> rupiah per pensil. Andi menulis <b>3b + 2p</b>, sedangkan Rina menulis <b>5bp</b>. Siapa yang benar? Jelaskan alasannya.</p><textarea id="criticalAnswer" rows="3" placeholder="Tuliskan jawaban dan alasanmu di sini..."></textarea><button style="margin-top:9px" onclick="checkCritical()">Periksa refleksi</button><div id="criticalFeedback" aria-live="polite"></div></div>
+ <div class="footer-nav"><button class="secondary" onclick="go('menu')">← Menu</button><button onclick="markDone('simulation');startQuiz()">Selesai, mulai kuis →</button></div>
+</section>
+
+<section id="quiz" class="screen">
+ <div class="breadcrumb"><button class="secondary" onclick="go('menu')">Menu</button><span>›</span><span>Kuis</span></div>
+ <div class="section-head"><div><div class="eyebrow">Kegiatan 3</div><h2>Uji pemahamanmu!</h2><p class="muted">Pilih satu jawaban terbaik. Skor dihitung otomatis setelah kuis selesai.</p></div><span class="pill" id="quizScorePill">Skor: —</span></div>
+ <div class="panel">
+  <div class="question-number" id="qNum">SOAL 1 DARI 10</div><div class="progress"><span id="qProgress"></span></div>
+  <div class="question" id="qText"></div><div class="options" id="qOptions"></div><div id="qFeedback" aria-live="polite"></div>
+  <div class="footer-nav"><button class="secondary" onclick="go('menu')">Keluar ke menu</button><button id="nextQBtn" onclick="nextQuestion()" disabled>Soal berikutnya →</button></div>
+ </div>
+</section>
+
+<section id="results" class="screen">
+ <div class="hero" style="grid-template-columns:1fr auto">
+  <div><div class="eyebrow">Kuis selesai</div><h2 id="resultTitle">Hebat, kamu sudah berusaha!</h2><p id="resultText">Lihat hasil belajarmu di bawah ini.</p><div class="hero-actions"><button onclick="startQuiz()">Ulangi kuis</button><button class="light" onclick="go('menu')">Kembali ke menu</button></div></div>
+  <div style="text-align:center;min-width:120px"><div class="score-big" id="finalScore">0</div><b>Nilai / 100</b></div>
+ </div>
+ <div class="grid" style="margin-top:16px"><div class="panel"><h3>Hasil jawaban</h3><p id="resultCorrect"></p><p id="resultWrong"></p><p class="muted">Nilai dihitung dari jumlah jawaban benar ÷ 10 × 100.</p></div><div class="panel"><h3>Refleksi belajar</h3><label for="reflection">Apa hal baru yang kamu pahami tentang aljabar?</label><textarea id="reflection" rows="4" placeholder="Tuliskan refleksimu..."></textarea><button style="margin-top:9px" onclick="saveReflection()">Simpan refleksi di perangkat ini</button><div id="reflectionFeedback" aria-live="polite"></div></div></div>
+</section>
+
+<section id="profile" class="screen">
+ <div class="breadcrumb"><button class="secondary" onclick="go('menu')">Menu</button><span>›</span><span>Profil MPI</span></div>
+ <div class="panel"><div class="eyebrow">Tentang aplikasi</div><h2>Jelajah Aljabar</h2><p>Multimedia Pembelajaran Interaktif Matematika Kelas VII SMP, materi Aljabar.</p>
+ <div class="grid"><div><h3>Identitas</h3><p><b>Satuan pendidikan:</b> SMPN 12 Kolaka Utara</p><p><b>Mata pelajaran:</b> Matematika</p><p><b>Kelas/Fase:</b> VII / Fase D</p><p><b>Kurikulum:</b> Kurikulum Merdeka</p></div><div><h3>Tujuan pembelajaran</h3><ul><li>Mengenali variabel, koefisien, konstanta, dan suku.</li><li>Menyederhanakan suku sejenis.</li><li>Menyatakan situasi sehari-hari ke bentuk aljabar.</li><li>Menalar dan menjelaskan model matematika sederhana.</li></ul></div></div>
+ <div class="callout"><b>Catatan penggunaan online:</b> Aplikasi ini berjalan di browser dan tidak memerlukan login atau server untuk kegiatan inti. Skor dan refleksi disimpan pada perangkat/browser yang digunakan, bukan dikirim ke guru secara otomatis.</div>
+ <button onclick="go('menu')">Mulai belajar</button></div>
+</section>
+</main>
+<footer>Jelajah Aljabar • MPI Matematika Kelas VII • SMPN 12 Kolaka Utara</footer>
+<script>
+const screens=['home','menu','material','simulation','quiz','results','profile'];
+let soundOn=false, materialDone=false, simulationDone=false, quizDone=false, simIndex=0, simAnswered=false, qIndex=0, answers=[], locked=false;
+function go(id){screens.forEach(s=>document.getElementById(s).classList.toggle('active',s===id));window.scrollTo({top:0,behavior:'smooth'});updateProgress()}
+function updateProgress(){let n=[materialDone,simulationDone,quizDone].filter(Boolean).length;let p=document.getElementById('progressPill');if(p)p.textContent='Progres: '+n+'/3'}
+function markDone(which){if(which==='material')materialDone=true;if(which==='simulation')simulationDone=true;if(which==='quiz')quizDone=true;updateProgress()}
+function toggleSound(){soundOn=!soundOn;document.getElementById('soundBtn').textContent=soundOn?'🔊 Suara: Aktif':'🔊 Suara: Mati';document.getElementById('soundBtn').setAttribute('aria-pressed',soundOn?'true':'false');if(soundOn)beep(660,.12)}
+function beep(freq=660,duration=.15){if(!soundOn)return;try{let ctx=new(window.AudioContext||window.webkitAudioContext)(),o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=freq;o.type='sine';g.gain.value=.06;o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+duration);o.onended=()=>ctx.close()}catch(e){}}
+function showPart(title,desc){document.getElementById('partFeedback').innerHTML='<b>'+title+':</b> '+desc;document.querySelectorAll('.part').forEach(b=>b.classList.toggle('selected',b.textContent===title))}
+function showMaterialCheck(){document.getElementById('materialCheck').innerHTML='<div class="callout"><b>Pertanyaan:</b> Hasil dari 5a + 2a − 3 adalah…<div class="chip-row"><button class="chip" onclick="materialAnswer(false)">7a + 3</button><button class="chip" onclick="materialAnswer(true)">7a − 3</button><button class="chip" onclick="materialAnswer(false)">7a</button></div><div id="materialFeedback"></div></div>'}
+function materialAnswer(ok){document.getElementById('materialFeedback').innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Benar! 5a dan 2a adalah suku sejenis, sehingga 5a + 2a − 3 = 7a − 3.':'Coba lagi. Gabungkan koefisien 5 dan 2, lalu pertahankan konstanta −3.')+'</div>';if(ok)beep(800,.16)}
+const sims=[
+ {title:'Membeli buku tulis',story:'Harga satu buku tulis adalah x rupiah. Berapa harga 3 buku tulis?',hint:'Petunjuk: harga yang sama dijumlahkan tiga kali.',opts:['x + 3','3x','x − 3','x ÷ 3'],correct:'3x',why:'Tiga buku dengan harga x rupiah per buku berarti x + x + x = 3x.'},
+ {title:'Pensil di dalam kotak',story:'Ada x pensil di kotak. Kemudian ditambahkan 4 pensil. Nyatakan jumlah pensil sekarang.',hint:'Petunjuk: jumlah bertambah 4.',opts:['4x','x − 4','x + 4','x ÷ 4'],correct:'x + 4',why:'Jumlah awal x ditambah 4 menjadi x + 4.'},
+ {title:'Apel untuk bekal',story:'Dina membawa y apel, lalu memakan 2 apel. Berapa apel yang tersisa?',hint:'Petunjuk: jumlah berkurang 2.',opts:['y + 2','2y','y − 2','y ÷ 2'],correct:'y − 2',why:'Dua apel diambil dari jumlah awal y, sehingga tersisa y − 2.'},
+ {title:'Membeli penghapus',story:'Harga satu penghapus adalah a rupiah. Berapa harga 5 penghapus?',hint:'Petunjuk: ada lima benda dengan harga sama.',opts:['a + 5','5a','a − 5','a ÷ 5'],correct:'5a',why:'Lima penghapus dengan harga a per buah bernilai 5 × a = 5a.'},
+ {title:'Sisa uang jajan',story:'Uang Riko Rp20.000. Ia membelanjakan x rupiah. Nyatakan sisa uangnya.',hint:'Petunjuk: uang awal dikurangi uang yang dibelanjakan.',opts:['20.000 + x','x − 20.000','20.000x','20.000 − x'],correct:'20.000 − x',why:'Sisa uang adalah uang awal dikurangi jumlah belanja, yaitu 20.000 − x.'}
+];
+function renderSim(){let s=sims[simIndex];simAnswered=false;document.getElementById('simCount').textContent='Situasi '+(simIndex+1)+' dari '+sims.length;document.getElementById('simTitle').textContent=s.title;document.getElementById('simStory').textContent=s.story;document.getElementById('simHint').textContent=s.hint;document.getElementById('simFeedback').textContent='Pilih salah satu jawaban.';document.getElementById('simFeedback').className='muted';document.getElementById('nextSimBtn').disabled=true;document.getElementById('nextSimBtn').textContent=simIndex===sims.length-1?'Selesai simulasi':'Berikutnya →';document.getElementById('simOptions').innerHTML=s.opts.map(o=>'<button class="chip" onclick="answerSim('+JSON.stringify(o).replace(/"/g,'&quot;')+')">'+o+'</button>').join('')}
+function answerSim(choice){if(simAnswered)return;simAnswered=true;let s=sims[simIndex],ok=choice===s.correct;document.querySelectorAll('#simOptions button').forEach(b=>{b.disabled=true;if(b.textContent===s.correct)b.classList.add('active')});let f=document.getElementById('simFeedback');f.className='feedback '+(ok?'good':'bad');f.textContent=(ok?'Tepat! ':'Belum tepat. Jawaban yang benar: '+s.correct+'. ')+s.why;document.getElementById('nextSimBtn').disabled=false;beep(ok?820:240,.18)}
+function nextSim(){if(simIndex<sims.length-1){simIndex++;renderSim()}else{markDone('simulation');startQuiz()}}
+function prevSim(){if(simIndex>0){simIndex--;renderSim()}}
+function startSimulation(){simIndex=0;renderSim();go('simulation')}
+function checkCritical(){let a=document.getElementById('criticalAnswer').value.trim(),f=document.getElementById('criticalFeedback');if(!a){f.innerHTML='<div class="feedback bad">Tuliskan jawaban terlebih dahulu.</div>';return}f.innerHTML='<div class="feedback good">Arah jawaban: Andi benar, karena harga 3 buku adalah 3b dan harga 2 pensil adalah 2p, sehingga totalnya 3b + 2p. Nilai b dan p berbeda jenis harga, jadi tidak dapat digabung menjadi 5bp. Cocokkan penjelasanmu dengan alasan ini.</div>';beep(700,.12)}
+const qs=[
+ {q:'Pada bentuk aljabar x + 5, manakah variabelnya?',o:['5','x','+','x + 5'],a:1,why:'x adalah variabel karena mewakili nilai yang dapat berubah atau belum diketahui.'},
+ {q:'Pada bentuk 4a + 7, koefisien dari a adalah…',o:['7','a','4','11'],a:2,why:'Koefisien adalah angka pengali variabel. Pada 4a, koefisiennya 4.'},
+ {q:'Konstanta pada bentuk 5y − 9 adalah…',o:['5','y','−9','5y'],a:2,why:'Konstanta adalah bilangan tanpa variabel, yaitu −9.'},
+ {q:'Berapa banyak suku pada bentuk 3x + 2?',o:['1','2','3','5'],a:1,why:'Suku dipisahkan oleh tanda + atau −. Bentuk 3x + 2 memiliki dua suku.'},
+ {q:'Sederhanakan 3x + 4x.',o:['7x','7x²','12x','x'],a:0,why:'Koefisien dijumlahkan: 3x + 4x = 7x.'},
+ {q:'Sederhanakan 9a − 5a + 2.',o:['4a − 2','4a + 2','14a + 2','4a'],a:1,why:'9a − 5a = 4a, lalu konstanta +2 tetap, sehingga hasilnya 4a + 2.'},
+ {q:'Harga satu buku adalah b rupiah. Harga 6 buku adalah…',o:['b + 6','b − 6','6b','b ÷ 6'],a:2,why:'Enam benda dengan harga b per benda memiliki total harga 6b.'},
+ {q:'Ada x kelereng, kemudian mendapat 7 kelereng lagi. Bentuk aljabarnya…',o:['7x','x − 7','x + 7','x ÷ 7'],a:2,why:'Jumlah bertambah 7, sehingga bentuknya x + 7.'},
+ {q:'Manakah pasangan suku sejenis?',o:['2a dan 2b','3x dan 5x','x dan x²','4a dan 4'],a:1,why:'3x dan 5x memiliki variabel yang sama dengan pangkat yang sama.'},
+ {q:'Satu buku berharga b rupiah dan satu pensil berharga p rupiah. Harga 2 buku dan 3 pensil adalah…',o:['5bp','2b + 3p','2b + p','b + 3p'],a:1,why:'Dua buku berharga 2b dan tiga pensil berharga 3p, sehingga totalnya 2b + 3p.'}
+];
+function startQuiz(){qIndex=0;answers=[];locked=false;document.getElementById('quizScorePill').textContent='Skor: —';renderQuestion();go('quiz')}
+function renderQuestion(){let q=qs[qIndex];locked=false;document.getElementById('qNum').textContent='SOAL '+(qIndex+1)+' DARI '+qs.length;document.getElementById('qProgress').style.width=(qIndex/qs.length*100)+'%';document.getElementById('qText').textContent=q.q;document.getElementById('qOptions').innerHTML=q.o.map((o,i)=>'<button class="option" onclick="answerQuestion('+i+')" id="opt'+i+'">'+String.fromCharCode(65+i)+'. '+o+'</button>').join('');document.getElementById('qFeedback').innerHTML='';document.getElementById('nextQBtn').disabled=true;document.getElementById('nextQBtn').textContent=qIndex===qs.length-1?'Lihat hasil →':'Soal berikutnya →'}
+function answerQuestion(i){if(locked)return;locked=true;let q=qs[qIndex],ok=i===q.a;answers[qIndex]=i;document.querySelectorAll('.option').forEach((b,j)=>{b.disabled=true;if(j===q.a)b.classList.add('correct');if(j===i&&i!==q.a)b.classList.add('wrong')});document.getElementById('qFeedback').innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'👏 Benar! ':'Belum tepat. ')+q.why+'</div>';document.getElementById('nextQBtn').disabled=false;beep(ok?850:220,.18)}
+function nextQuestion(){if(!locked)return;if(qIndex<qs.length-1){qIndex++;renderQuestion()}else{finishQuiz()}}
+function finishQuiz(){let correct=answers.filter((a,i)=>a===qs[i].a).length,score=correct*10;markDone('quiz');document.getElementById('qProgress').style.width='100%';document.getElementById('finalScore').textContent=score;document.getElementById('resultTitle').textContent=score>=80?'Hebat sekali!':score>=60?'Usaha yang baik!':'Terus berlatih, kamu bisa!';document.getElementById('resultText').textContent=score>=80?'Kamu sudah memahami banyak konsep dasar aljabar.':score>=60?'Tinjau kembali bagian yang belum tepat dan coba lagi.':'Pelajari kembali materi, lalu ulangi kuis untuk meningkatkan hasil.';document.getElementById('resultCorrect').textContent='Jawaban benar: '+correct+' dari '+qs.length+' soal.';document.getElementById('resultWrong').textContent='Jawaban belum tepat: '+(qs.length-correct)+' soal.';document.getElementById('quizScorePill').textContent='Skor: '+score;try{localStorage.setItem('jelajahAljabarLastScore',String(score))}catch(e){}go('results')}
+function saveReflection(){let v=document.getElementById('reflection').value.trim(),f=document.getElementById('reflectionFeedback');if(!v){f.innerHTML='<div class="feedback bad">Tuliskan refleksi terlebih dahulu.</div>';return}try{localStorage.setItem('jelajahAljabarReflection',v);f.innerHTML='<div class="feedback good">Refleksi tersimpan pada browser/perangkat ini.</div>'}catch(e){f.innerHTML='<div class="feedback bad">Browser tidak mengizinkan penyimpanan lokal. Salin refleksimu agar tidak hilang.</div>'}}
+renderSim();updateProgress();
+</script>
+</body>
+</html>
